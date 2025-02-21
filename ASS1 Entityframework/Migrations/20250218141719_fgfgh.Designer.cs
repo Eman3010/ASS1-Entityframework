@@ -4,6 +4,7 @@ using ASS1_Entityframework.context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASS1_Entityframework.Migrations
 {
     [DbContext(typeof(EnterpriseDB_context))]
-    partial class EnterpriseDB_contextModelSnapshot : ModelSnapshot
+    [Migration("20250218141719_fgfgh")]
+    partial class fgfgh
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,18 +124,10 @@ namespace ASS1_Entityframework.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ddepartmentID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("deptId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("salary")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ddepartmentID");
 
                     b.ToTable("Instructors");
                 });
@@ -232,17 +227,6 @@ namespace ASS1_Entityframework.Migrations
                     b.Navigation("Instructor");
                 });
 
-            modelBuilder.Entity("ASS1_Entityframework.Entities.Instructor", b =>
-                {
-                    b.HasOne("ASS1_Entityframework.Entities.Ddepartment", "ddepartment")
-                        .WithMany("inst")
-                        .HasForeignKey("ddepartmentID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ddepartment");
-                });
-
             modelBuilder.Entity("ASS1_Entityframework.Entities.Student", b =>
                 {
                     b.HasOne("ASS1_Entityframework.Entities.Ddepartment", "Ddepartment")
@@ -257,8 +241,6 @@ namespace ASS1_Entityframework.Migrations
             modelBuilder.Entity("ASS1_Entityframework.Entities.Ddepartment", b =>
                 {
                     b.Navigation("Students");
-
-                    b.Navigation("inst");
                 });
 
             modelBuilder.Entity("ASS1_Entityframework.Entities.Instructor", b =>

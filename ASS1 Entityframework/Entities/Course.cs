@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,10 @@ namespace ASS1_Entityframework.Entities
         public string Name { get; set; }
         public string Description { get; set; }
        public string Duration{ get; set; }
-        public int Top_ID { get; set; }
+        [ForeignKey("Courses")]
+        public int? topId { get; set; }
+        public  Topic topic { get; set; }
+
+        
     }
 }

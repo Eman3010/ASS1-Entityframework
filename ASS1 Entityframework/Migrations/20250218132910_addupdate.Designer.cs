@@ -4,6 +4,7 @@ using ASS1_Entityframework.context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASS1_Entityframework.Migrations
 {
     [DbContext(typeof(EnterpriseDB_context))]
-    partial class EnterpriseDB_contextModelSnapshot : ModelSnapshot
+    [Migration("20250218132910_addupdate")]
+    partial class addupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,15 +45,7 @@ namespace ASS1_Entityframework.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("topId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("topicId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("topicId");
 
                     b.ToTable("Courses");
                 });
@@ -82,59 +77,13 @@ namespace ASS1_Entityframework.Migrations
                     b.Property<DateTime>("HiringDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("InsID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("InstructorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("InstructorId");
-
                     b.ToTable("Ddepartments");
-                });
-
-            modelBuilder.Entity("ASS1_Entityframework.Entities.Instructor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Bouns")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<double>("HourRate")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ddepartmentID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("deptId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("salary")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ddepartmentID");
-
-                    b.ToTable("Instructors");
                 });
 
             modelBuilder.Entity("ASS1_Entityframework.Entities.Stud_Course", b =>
@@ -169,9 +118,6 @@ namespace ASS1_Entityframework.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DdepartmentID")
-                        .HasColumnType("int");
-
                     b.Property<string>("FName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -183,12 +129,7 @@ namespace ASS1_Entityframework.Migrations
                     b.Property<int>("age")
                         .HasColumnType("int");
 
-                    b.Property<int?>("deptID")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("DdepartmentID");
 
                     b.ToTable("Students");
                 });
@@ -208,67 +149,6 @@ namespace ASS1_Entityframework.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Topic");
-                });
-
-            modelBuilder.Entity("ASS1_Entityframework.Entities.Course", b =>
-                {
-                    b.HasOne("ASS1_Entityframework.Entities.Topic", "topic")
-                        .WithMany("Courses")
-                        .HasForeignKey("topicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("topic");
-                });
-
-            modelBuilder.Entity("ASS1_Entityframework.Entities.Ddepartment", b =>
-                {
-                    b.HasOne("ASS1_Entityframework.Entities.Instructor", "Instructor")
-                        .WithMany("Departments")
-                        .HasForeignKey("InstructorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Instructor");
-                });
-
-            modelBuilder.Entity("ASS1_Entityframework.Entities.Instructor", b =>
-                {
-                    b.HasOne("ASS1_Entityframework.Entities.Ddepartment", "ddepartment")
-                        .WithMany("inst")
-                        .HasForeignKey("ddepartmentID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ddepartment");
-                });
-
-            modelBuilder.Entity("ASS1_Entityframework.Entities.Student", b =>
-                {
-                    b.HasOne("ASS1_Entityframework.Entities.Ddepartment", "Ddepartment")
-                        .WithMany("Students")
-                        .HasForeignKey("DdepartmentID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ddepartment");
-                });
-
-            modelBuilder.Entity("ASS1_Entityframework.Entities.Ddepartment", b =>
-                {
-                    b.Navigation("Students");
-
-                    b.Navigation("inst");
-                });
-
-            modelBuilder.Entity("ASS1_Entityframework.Entities.Instructor", b =>
-                {
-                    b.Navigation("Departments");
-                });
-
-            modelBuilder.Entity("ASS1_Entityframework.Entities.Topic", b =>
-                {
-                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }
